@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="PatientDetails.Views.ProfilePicUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PatientDetails.Views"
+             xmlns:converters="clr-namespace:PatientDetails.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="200">
+
+    <UserControl.Resources>
+        <converters:ImagePathToImageConverter x:Key="imagePathToImageConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Button Content="Click To Set Picture"
+                Foreground="Orange"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Command="{Binding Path=OpenImageCommand}">
+
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Source="{Binding Path=CurrentPatient.ProfilePicture, FallbackValue={StaticResource UserAccountDrawingImage}, Converter={StaticResource imagePathToImageConverter}}"
+                               Stretch="{Binding Path=CurrentPatient.ProfilePictureStretch}"/>
+                        <Rectangle Fill="Black"
+                                   Opacity="0"
+                                   x:Name="rect"/>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Opacity="0"
+                                          x:Name="content"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation Storyboard.TargetName="rect"
+                                                         To=".8"
+                                                         Duration="0:0:.5"/>
+
+                                        <DoubleAnimation Storyboard.TargetName="content"
+                                                         To="1"
+                                                         Duration="0:0:.5"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation Storyboard.TargetName="rect"
+                                                         Duration="0:0:.3"/>
+                                        <DoubleAnimation Storyboard.TargetName="content"
+                                                         Duration="0:0:.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</UserControl>

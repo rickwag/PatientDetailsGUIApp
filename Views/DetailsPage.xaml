@@ -1,0 +1,144 @@
+﻿<Page x:Class="PatientDetails.Views.DetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PatientDetails.Views"
+      xmlns:viewModels="clr-namespace:PatientDetails.ViewModels"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DetailsPage"
+      FontFamily="montserrat">
+
+    <Page.Resources>
+        <Style x:Key="headerTxt"
+               TargetType="{x:Type TextBlock}">
+
+            <Setter Property="FontSize"
+                    Value="30"/>
+            <Setter Property="FontWeight"
+                    Value="Bold"/>
+        </Style>
+        
+        <Style x:Key="normalTxt"
+               TargetType="{x:Type TextBlock}">
+
+            <Setter Property="FontSize"
+                    Value="24"/>
+            <Setter Property="Margin"
+                    Value="0 20 0 20"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+
+            <Setter Property="Margin"
+                    Value="0 40 20 0"/>
+            <Setter Property="Height"
+                    Value="30"/>
+            <Setter Property="MinWidth"
+                    Value="280"/>
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center"/>
+            <Setter Property="FontSize"
+                    Value="14"/>
+        </Style>
+
+        <Style TargetType="{x:Type DatePicker}">
+
+            <Setter Property="Margin"
+                    Value="0 40 20 0"/>
+            <Setter Property="Height"
+                    Value="28"/>
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center"/>
+            <Setter Property="FontSize"
+                    Value="14"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="White">
+        <DockPanel LastChildFill="True">
+            <Button Content="Back"
+                    Margin="20 10"
+                    HorizontalAlignment="Left"
+                    DockPanel.Dock="Top"
+                    Command="{Binding Path=GoToHomeCommand}"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <local:ProfilePicUserControl Width="150"
+                                             Height="250"
+                                             VerticalAlignment="Top"/>
+
+                <ScrollViewer Grid.Column="1"
+                              VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Orientation="Vertical">
+
+                            <TextBlock Text="Personal"
+                                   Style="{StaticResource headerTxt}"/>
+                            <TextBlock Text="First Name"
+                                   Style="{StaticResource normalTxt}"/>
+                            <TextBlock Text="Last Name"
+                                   Style="{StaticResource normalTxt}"/>
+                            <TextBlock Text="Date of Birth"
+                                   Style="{StaticResource normalTxt}"/>
+                            <TextBlock Text="Marital Status"
+                                   Style="{StaticResource normalTxt}"/>
+                            <TextBlock Text="Contacts"
+                                   Style="{StaticResource headerTxt}"/>
+                            <TextBlock Text="Phone Number"
+                                   Style="{StaticResource normalTxt}"/>
+                            <TextBlock Text="Email Address"
+                                   Style="{StaticResource normalTxt}"/>
+                            <TextBlock Text="Address"
+                                   Style="{StaticResource normalTxt}"/>
+                            <TextBlock Text="Medical"
+                                   Style="{StaticResource headerTxt}"/>
+                            <TextBlock Text="Date of Treatment"
+                                   Style="{StaticResource normalTxt}"/>
+                            <TextBlock Text="Treatment"
+                                   Style="{StaticResource normalTxt}"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left">
+
+                            <TextBox Margin="0 60 20 0"
+                                     Text="{Binding Path=CurrentPatient.FirstName}"
+                                     x:Name="firstNameTxtBox"/>
+                            <TextBox Text="{Binding Path=CurrentPatient.LastName}"/>
+                            <DatePicker 
+                                        SelectedDate="{Binding Path=CurrentPatient.DateOfBirth, Mode=TwoWay}"
+                                        SelectedDateFormat="Long"/>
+                            <TextBox Text="{Binding Path=CurrentPatient.MaritalStatus}"/>
+                            <TextBox Margin="0 70 20 0"
+                                     Text="{Binding Path=CurrentPatient.PhoneNumber}"/>
+                            <TextBox Text="{Binding Path=CurrentPatient.EmailAddress}"/>
+                            <TextBox Text="{Binding Path=CurrentPatient.PhysicalAddress}"/>
+                            <DatePicker Margin="0 70 20 0"
+                                        SelectedDate="{Binding Path=CurrentPatient.DateOfTreatment}"
+                                        SelectedDateFormat="Long"/>
+                            <TextBox Height="200"
+                                     Margin="0 40 20 50"
+                                     AcceptsReturn="True"
+                                     VerticalContentAlignment="Top"
+                                     Text="{Binding Path=CurrentPatient.Treatment}"/>
+
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Page>
